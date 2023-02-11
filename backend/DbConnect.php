@@ -6,11 +6,6 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: *");
 
-include_once 'Invalid.php';
-include_once 'Book.php';
-include_once 'DVD.php';
-include_once 'Furniture.php';
-include_once 'env.php';
 class DbConnect {
          public function connect() {
         $server = "localhost";
