@@ -15,6 +15,6 @@ class DVD extends Product
             return "";
         }
 
-        return "Invalid value for size!";
+        return "Invalid DVD size!";
     }
 };

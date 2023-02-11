@@ -11,10 +11,10 @@ class Book extends Product
         }
 
         if (is_numeric($this->data['weight']) && floatval($this->data['weight'] >= 0)) {
-            $this->value = 'Weight: ' . $this->data['weight'] . ' KG';
+            $this->value = 'Weight: '. $this->data['weight']. ' KG';
             return "";
         }
 
-        return "Invalid value for weight!";
+        return "Invalid Weight!";
     }
 };

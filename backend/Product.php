@@ -43,14 +43,16 @@ abstract class Product
         if(!$this->data['sku']) {
             return "SKU was not provided!";
         }
-        $objDb =new DbConnect;
+       $objDb =new DbConnect;
         $conn = $objDb->connect();
-        if ($objDb->getProduct($this->data['sku'])) {
-            return "SKU already taken!";
-        }
-
+         $sql='SELECT * FROM products WHERE sku ='.$this->data['sku'] ;
+        $statement = $conn->query($sql);
+        if ($statement->num_rows > 0) {
+            return "SKU already exists!";
+        } else {
         $this->sku = $this->data['sku'];
-        return "";
+        return '';
+        }
     }
 
     private function validateName()
@@ -78,14 +80,6 @@ abstract class Product
         
         $this->price = floatval($this->data['price']);
         return "";
-        
-    }
-
-    protected function reduceType($carry, $item){
-        if($carry === true || $item === $carry){
-            return true;
-        }
-        return $carry;
     }
 
     private function validateType()
@@ -93,13 +87,12 @@ abstract class Product
         if(!$this->data['type']) {
             return "Type was not provided!";
         }
-
-        if(array_reduce($this::$validTypes, array($this, "reduceType"), $this->data['type']) !== true){
-            return "Invalid type!";
+        if (in_array($this->data['type'], $this::$validTypes)) {
+            $this->type = $this->data['type'];
+            return "";
         }
-
-        $this->type = $this->data['type'];
-        return "";
+            return "Invalid type!";
+       
     }
 
     abstract protected function validateValue();
