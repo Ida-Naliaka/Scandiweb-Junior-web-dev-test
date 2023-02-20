@@ -1,14 +1,12 @@
-import React from 'react'
-import "./Footer.scss"
+import React from "react";
+import "./Footer.scss";
 
 const Footer = () => {
   return (
-    <div className='footer'>
-    <div >
-      Scandiweb Test Assignment By Ida Wafula
+    <div className="footer">
+      <div>Scandiweb Test Assignment By Ida Wafula</div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

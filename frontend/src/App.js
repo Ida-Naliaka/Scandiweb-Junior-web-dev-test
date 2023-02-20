@@ -1,11 +1,10 @@
-import { Route, Routes } from 'react-router-dom';
-import './App.css';
-import AddProduct from './Components/AddProduct';
-import Footer from './Components/Footer';
-import Product from './Components/Product';
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+import AddProduct from "./Components/AddProduct";
+import Footer from "./Components/Footer";
+import Product from "./Components/Product";
 
 function App() {
-
   return (
     <div className="App">
       <Routes>

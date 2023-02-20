@@ -1,6 +1,6 @@
 <?php
-
-include_once 'DbConnect.php';
+include_once "HelperFunctions/Escapestr.php";
+include_once "Operations.php";
 
 abstract class Product
 {
@@ -9,7 +9,7 @@ abstract class Product
     public float $price;
     public string $type;
     public string $value;
-    public static array $validTypes = ['DVD', 'Book', 'Furniture'];
+    public static array $validTypes = ["DVD", "Book", "Furniture"];
     public array $data;
 
     public function __construct($input)
@@ -40,59 +40,60 @@ abstract class Product
 
     private function validateSku()
     {
-        if(!$this->data['sku']) {
+        if (!$this->data["sku"]) {
             return "SKU was not provided!";
         }
-       $objDb =new DbConnect;
-        $conn = $objDb->connect();
-         $sql='SELECT * FROM products WHERE sku ='.$this->data['sku'] ;
-        $statement = $conn->query($sql);
+        $statement = (new Operations())->find($this->data["sku"], "sku");
         if ($statement->num_rows > 0) {
             return "SKU already exists!";
         } else {
-        $this->sku = $this->data['sku'];
-        return '';
+            $this->sku = $this->data["sku"];
+            return "";
         }
     }
 
     private function validateName()
     {
-        if(!$this->data['name']) {
+        if (!$this->data["name"]) {
             return "Name was not provided!";
         }
 
-        if ($this->data['name'] === '') {
+        if ($this->data["name"] === "") {
             return "Invalid name!";
         }
-        $this->name = $this->data['name'];
-        return ""; 
+        $prodname = Escapestr($this->data["name"]); //for name entries with apostrophes etc
+        $this->name = $prodname;
+        return "";
     }
 
     private function validatePrice()
     {
-        if(!$this->data['price']) {
+        if (!$this->data["price"]) {
             return "Price was not provided!";
         }
 
-        if (!filter_var($this->data['price'], FILTER_VALIDATE_FLOAT) || !(strlen($this->data['price']) > 0) || !(floatval($this->data['price']) >= 0)) {
+        if (
+            !filter_var($this->data["price"], FILTER_VALIDATE_FLOAT) ||
+            !(strlen($this->data["price"]) > 0) ||
+            !(floatval($this->data["price"]) >= 0)
+        ) {
             return "Invalid price!";
         }
-        
-        $this->price = floatval($this->data['price']);
+
+        $this->price = floatval($this->data["price"]);
         return "";
     }
 
     private function validateType()
     {
-        if(!$this->data['type']) {
+        if (!$this->data["type"]) {
             return "Type was not provided!";
         }
-        if (in_array($this->data['type'], $this::$validTypes)) {
-            $this->type = $this->data['type'];
+        if (in_array($this->data["type"], $this::$validTypes)) {
+            $this->type = $this->data["type"];
             return "";
         }
-            return "Invalid type!";
-       
+        return "Invalid type!";
     }
 
     abstract protected function validateValue();

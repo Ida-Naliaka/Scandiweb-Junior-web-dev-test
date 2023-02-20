@@ -5,7 +5,6 @@
 /frontend/build
 /.pnp
 .pnp.js
-/backend/misc.php
 
 # testing
 /coverage
